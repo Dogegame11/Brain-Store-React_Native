@@ -1,0 +1,70 @@
+import React from 'react';
+import { Image } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+import Home from '../screens/Home/Home';
+import Account from '../screens/Account/Account';
+import Cart from '../screens/Cart/Cart';
+import Orders from '../screens/Orders/Orders';
+
+
+import { styles } from '../theme/NavgitaionAppStyle';
+
+
+export type RootTabParamList = {
+  Home: undefined;
+  Orders: undefined;
+  Cart: undefined;
+  Account: undefined;
+};
+
+
+const TAB_ICONS: Record<keyof RootTabParamList, any> = {
+  Home: require('../assets/Home.png'),
+  Orders: require('../assets/Head.png'),
+  Cart: require('../assets/Home.png'),
+  Account: require('../assets/Head.png'),
+};
+
+const Tab = createBottomTabNavigator<RootTabParamList>();
+
+export const BottomTabNavigator = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarStyle: styles.tabBar,
+        tabBarIcon: ({ size }) => (
+          <Image
+            source={TAB_ICONS[route.name]}
+            style={{ width: size, height: size }}
+            resizeMode="contain"
+          />
+        ),
+      })}
+    >
+      <Tab.Screen 
+        name="Home" 
+        component={Home} 
+        options={{ title: 'Головна' }} 
+      />
+      <Tab.Screen 
+        name="Orders" 
+        component={Orders} 
+        options={{ title: 'Замовлення' }} 
+      />
+      <Tab.Screen 
+        name="Cart" 
+        component={Cart} 
+        options={{ title: 'Кошик' }} 
+      />
+      <Tab.Screen 
+        name="Account" 
+        component={Account} 
+        options={{ title: 'Акаунт' }} 
+      />
+    </Tab.Navigator>
+  );
+};

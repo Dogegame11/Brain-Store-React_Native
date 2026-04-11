@@ -1,91 +1,80 @@
 import React from 'react';
 import { 
-  Text, 
-  View, 
-  ScrollView, 
-  TouchableOpacity, 
-  SafeAreaView, 
-  StatusBar,
-  Image,
+  Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, Image, ActivityIndicator
 } from 'react-native';
-
 import { styles } from './AccountStyle';
 import BarcodeCard from '../../components/Barcode';
+import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
 
-const userPhone = "0635872033";
+import { useUser } from '../../hooks/useUser';
 
-type MenuItem = {
-  id: number;
-  title: string;
-  count?: number; 
-  iconColor?: string; 
-};
+const userPhone = '+380635872033';
 
-const menuItems: MenuItem[] = [
-  { id: 1,  title: 'Каталог', iconColor: '#28677c' },
-  { id: 2,  title: 'Кошик', count: 1, iconColor: '#28677c' },
-  { id: 3,  title: 'Акції', iconColor: '#28677c' },
-  { id: 4,  title: 'Бажання', iconColor: '#28677c' },
-  { id: 5,  title: 'Порівняння', iconColor: '#28677c' },
-];
-
-const secondaryItems: MenuItem[] = [
-  { id: 6,  title: 'Магазини', iconColor: '#607D8B' },
-  { id: 7,  title: 'Уцінені товари', iconColor: '#607D8B' },
-];
-
-const MenuItemRow: React.FC<{ item: MenuItem, isLast?: boolean }> = ({ item, isLast }) => (
+const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
   <TouchableOpacity style={[styles.menuRow, isLast && styles.lastMenuRow]}>
     <View style={styles.menuLeft}>
-      
-      <Text style={[styles.menuTitle, { color: item.iconColor || '#333' }]}>
-        {item.title}
-      </Text>
+      <Text style={[styles.menuTitle, { color: item.iconColor }]}>{item.title}</Text>
     </View>
-
-    {item.count && (
+    {item.count ? (
       <View style={styles.badge}>
         <Text style={styles.badgeText}>{item.count}</Text>
       </View>
-    )}
+    ) : null}
   </TouchableOpacity>
 );
 
 const AccountScreen: React.FC = () => {
+
+  const { user, isLoading, error } = useUser();
+
+  if(isLoading){
+    return(
+      <View style={[styles.container, { justifyContent: 'center' }]}>
+        <ActivityIndicator size="large" color="#28677c" />
+      </View>
+    )
+  }
+  if (error || !user) {
+    return (
+      <View style={styles.container}>
+        <Text>Сталася помилка: {error}</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#2C3E50" />
       
       <View style={styles.header}>
-        <Image
-        
-          source={require('../../assets/logo.png')}
-          style= {{width: 120, height: 40}}
-          resizeMode='contain'
+        <Image 
+          source={require('../../assets/logo.png')} 
+          style={{ width: 120, height: 40 }} 
+          resizeMode="contain" 
         />
-
         <TouchableOpacity style={styles.langSelector}>
           <Text style={styles.langText}>UA </Text>
-        <Text style={styles.locationTitle}>Київ</Text>
+          <Text style={styles.locationTitle}>Київ</Text>
         </TouchableOpacity>
       </View>
       
-      <ScrollView style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: 30 }} 
+      >
         <TouchableOpacity style={styles.profileBlock}>
           <View style={styles.profileLeft}>
             <View style={styles.avatarPlaceholder}>
               <Text style={styles.avatarIcon}>👤</Text>
             </View>
             <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>Олексій</Text>
-              <Text style={styles.profilePhone}>063 587 20 33</Text>
-              <View style={{ marginTop: 10 }}>
-        </View>
+              <Text style={styles.profileName}>{user.name}</Text>
+              <Text style={styles.profilePhone}>{user.phone}</Text>
             </View>
           </View>
           <View style={styles.profileRight}>
             <View style={styles.bonusBlock}>
-              <Text style={styles.bonusCount}>156 балів</Text>
+              <Text style={styles.bonusCount}>{user.bonusUP}</Text>
               <Text style={styles.bonusIcon}>[UP]</Text>
             </View>
             <Text style={styles.profileArrow}>›</Text>
@@ -93,31 +82,33 @@ const AccountScreen: React.FC = () => {
         </TouchableOpacity>
         
         <View style={styles.separator} />
-
-        <BarcodeCard 
-            value={userPhone} 
-        />
+        <BarcodeCard value={user.phone} />
         
         <View style={styles.menuBlock}>
-          {menuItems.map(item => (
-            <MenuItemRow key={item.id} item={item} />
+          {MAIN_MENU_ITEMS.map((item, index) => (
+            <MenuItemRow 
+              key={item.id} 
+              item={item} 
+              isLast={index === MAIN_MENU_ITEMS.length - 1} 
+            />
           ))}
         </View>
         
-        <View style={styles.lineDivider} />     
-        <View style={styles.separator} />   
+        <View style={styles.lineDivider} /> 
+        <View style={styles.separator} /> 
+        
         <View style={styles.menuBlock}>
-          {secondaryItems.map(item => (
-            <MenuItemRow key={item.id} item={item} isLast={false}/>
+          {SECONDARY_MENU_ITEMS.map((item, index) => (
+            <MenuItemRow 
+              key={item.id} 
+              item={item} 
+              isLast={index === SECONDARY_MENU_ITEMS.length - 1} 
+            />
           ))}
         </View>
-
-        <View />
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-
 
 export default AccountScreen;
