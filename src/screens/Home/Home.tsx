@@ -1,10 +1,14 @@
-import { View, Text } from 'react-native';
+import { View,} from 'react-native';
 import React from 'react';
+
+import SearchBar from '../../components/SearchBar';
+import ImageSlider from '../../components/ImageSlider';
 
 const Home: React.FC = () => {
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Home page!</Text>
+        <View >
+            <SearchBar />
+            <ImageSlider />
         </View>
     );
 }

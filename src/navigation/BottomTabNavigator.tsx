@@ -8,6 +8,8 @@ import Account from '../screens/Account/Account';
 import Cart from '../screens/Cart/Cart';
 import Orders from '../screens/Orders/Orders';
 
+import Header from '../components/Header';
+
 
 import { styles } from '../theme/NavgitaionAppStyle';
 
@@ -34,7 +36,8 @@ export const BottomTabNavigator = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => ({
-        headerShown: false,
+        headerShown: true,
+        header: ()=> <Header />,
         tabBarStyle: styles.tabBar,
         tabBarIcon: ({ size }) => (
           <Image

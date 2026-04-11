@@ -1,14 +1,17 @@
 import React from 'react';
 import { 
-  Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, Image, ActivityIndicator
+  Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar,ActivityIndicator
 } from 'react-native';
 import { styles } from './AccountStyle';
+
+
 import BarcodeCard from '../../components/Barcode';
+
+
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
 
 import { useUser } from '../../hooks/useUser';
 
-const userPhone = '+380635872033';
 
 const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
   <TouchableOpacity style={[styles.menuRow, isLast && styles.lastMenuRow]}>
@@ -45,19 +48,7 @@ const AccountScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#2C3E50" />
-      
-      <View style={styles.header}>
-        <Image 
-          source={require('../../assets/logo.png')} 
-          style={{ width: 120, height: 40 }} 
-          resizeMode="contain" 
-        />
-        <TouchableOpacity style={styles.langSelector}>
-          <Text style={styles.langText}>UA </Text>
-          <Text style={styles.locationTitle}>Київ</Text>
-        </TouchableOpacity>
-      </View>
-      
+
       <ScrollView 
         style={styles.content}
         contentContainerStyle={{ paddingBottom: 30 }} 
