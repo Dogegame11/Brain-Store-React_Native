@@ -1,7 +1,7 @@
 // src/components/MenuItemRow.tsx
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
-import { styles } from '../screens/Account/AccountStyle';
+import { styles } from '../../../pages/Account/AccountStyle';
 
 interface Props {
   title: string;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Image,} from 'react-native'
-import { styles } from '../screens/Account/AccountStyle'
+import { styles } from '../../pages/Account/AccountStyle'
 
 export class Header extends Component {
   render() {

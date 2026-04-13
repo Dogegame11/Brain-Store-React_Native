@@ -1,8 +1,8 @@
 import { View,} from 'react-native';
 import React from 'react';
 
-import SearchBar from '../../components/SearchBar';
-import ImageSlider from '../../components/ImageSlider';
+import SearchBar from '../../shared/ui/SearchBar';
+import ImageSlider from '../../features/products/components/ImageSlider';
 
 const Home: React.FC = () => {
     return (

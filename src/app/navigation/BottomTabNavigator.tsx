@@ -3,15 +3,15 @@ import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
-import Home from '../screens/Home/Home';
-import Account from '../screens/Account/Account';
-import Cart from '../screens/Cart/Cart';
-import Orders from '../screens/Orders/Orders';
+import Home from '../../pages/Home/Home';
+import Account from '../../pages/Account/Account';
+import Cart from '../../pages/Cart/Cart';
+import Orders from '../../pages/Orders/Orders';
 
-import Header from '../components/Header';
+import Header from '../../shared/ui/Header';
 
 
-import { styles } from '../theme/NavgitaionAppStyle';
+import { styles } from '../../theme/NavgitaionAppStyle';
 
 
 export type RootTabParamList = {
@@ -23,10 +23,10 @@ export type RootTabParamList = {
 
 
 const TAB_ICONS: Record<keyof RootTabParamList, any> = {
-  Home: require('../assets/Home.png'),
-  Orders: require('../assets/Head.png'),
-  Cart: require('../assets/Home.png'),
-  Account: require('../assets/Head.png'),
+  Home: require('../../assets/Home.png'),
+  Orders: require('../../assets/Orders.png'),
+  Cart: require('../../assets/Cart.png'),
+  Account: require('../../assets/Account.png'),
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();

@@ -5,12 +5,12 @@ import {
 import { styles } from './AccountStyle';
 
 
-import BarcodeCard from '../../components/Barcode';
+import BarcodeCard from '../../shared/ui/Barcode';
 
 
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
 
-import { useUser } from '../../hooks/useUser';
+import { useUser } from '../../features/auth/hooks/useUser';
 
 
 const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
