@@ -7,7 +7,7 @@ export class Header extends Component {
     return (
             <View style={styles.header}>
               <Image 
-                source={require('../assets/logo.png')} 
+                source={require('../../assets/logo.png')} 
                 style={{ width: 120, height: 40 }} 
                 resizeMode="contain" 
               />

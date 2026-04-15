@@ -19,10 +19,10 @@ const DOT_SPACING = 8;
 
 
 const SLIDE_DATA = [
-  { id: '1', image: require('../assets/Slides/1.jpg'), title: '' },
-  { id: '2', image: require('../assets/Slides/2.jpg'), title: '' },
-  { id: '3', image: require('../assets/Slides/3.jpg'), title: '' },
-  { id: '4', image: require('../assets/Slides/4.jpg'), title: '' },
+  { id: '1', image: require('../../../assets/Slides/1.jpg'), title: '' },
+  { id: '2', image: require('../../../assets/Slides/2.jpg'), title: '' },
+  { id: '3', image: require('../../../assets/Slides/3.jpg'), title: '' },
+  { id: '4', image: require('../../../assets/Slides/4.jpg'), title: '' },
 ];
 
 const SlideItem: React.FC<{ item: typeof SLIDE_DATA[0] }> = ({ item }) => (

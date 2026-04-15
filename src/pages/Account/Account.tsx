@@ -1,8 +1,9 @@
 import React from 'react';
 import { 
-  Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar,ActivityIndicator
+  Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar
 } from 'react-native';
 import { styles } from './AccountStyle';
+
 
 
 import BarcodeCard from '../../shared/ui/Barcode';
@@ -10,7 +11,7 @@ import BarcodeCard from '../../shared/ui/Barcode';
 
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
 
-import { useUser } from '../../features/auth/hooks/useUser';
+import { useAuth } from '../../app/providers/AuthContext';
 
 
 const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
@@ -28,22 +29,8 @@ const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isL
 
 const AccountScreen: React.FC = () => {
 
-  const { user, isLoading, error } = useUser();
+  const {user} = useAuth();
 
-  if(isLoading){
-    return(
-      <View style={[styles.container, { justifyContent: 'center' }]}>
-        <ActivityIndicator size="large" color="#28677c" />
-      </View>
-    )
-  }
-  if (error || !user) {
-    return (
-      <View style={styles.container}>
-        <Text>Сталася помилка: {error}</Text>
-      </View>
-    );
-  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,13 +46,13 @@ const AccountScreen: React.FC = () => {
               <Text style={styles.avatarIcon}>👤</Text>
             </View>
             <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>{user.name}</Text>
-              <Text style={styles.profilePhone}>{user.phone}</Text>
+              <Text style={styles.profileName}>{user?.name}</Text>
+              <Text style={styles.profilePhone}>{user?.phone}</Text>
             </View>
           </View>
           <View style={styles.profileRight}>
             <View style={styles.bonusBlock}>
-              <Text style={styles.bonusCount}>{user.bonusUP}</Text>
+              <Text style={styles.bonusCount}>{user?.bonusUP}</Text>
               <Text style={styles.bonusIcon}>[UP]</Text>
             </View>
             <Text style={styles.profileArrow}>›</Text>
@@ -73,7 +60,7 @@ const AccountScreen: React.FC = () => {
         </TouchableOpacity>
         
         <View style={styles.separator} />
-        <BarcodeCard value={user.phone} />
+        <BarcodeCard value={user!.phone} />
         
         <View style={styles.menuBlock}>
           {MAIN_MENU_ITEMS.map((item, index) => (
