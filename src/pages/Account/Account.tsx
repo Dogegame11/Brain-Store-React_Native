@@ -3,6 +3,7 @@ import {
   Text, View, ScrollView, TouchableOpacity, SafeAreaView, StatusBar
 } from 'react-native';
 import { styles } from './AccountStyle';
+import { AuthModal } from '../../app/providers/AuthModal';
 
 
 
@@ -11,7 +12,7 @@ import BarcodeCard from '../../shared/ui/Barcode';
 
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
 
-import { useAuth } from '../../app/providers/AuthContext';
+import { useAuth } from '../../app/Context/AuthContext';
 
 
 const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
@@ -30,6 +31,10 @@ const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isL
 const AccountScreen: React.FC = () => {
 
   const {user} = useAuth();
+
+if (!user) {
+  return <AuthModal />;
+}
 
 
   return (
@@ -60,7 +65,7 @@ const AccountScreen: React.FC = () => {
         </TouchableOpacity>
         
         <View style={styles.separator} />
-        <BarcodeCard value={user!.phone} />
+        <BarcodeCard value={user.phone} />
         
         <View style={styles.menuBlock}>
           {MAIN_MENU_ITEMS.map((item, index) => (
