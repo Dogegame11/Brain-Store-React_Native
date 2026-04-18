@@ -40,8 +40,8 @@ const BarcodeCard: React.FC<BarcodeProps> = ({ value }) => {
       <View
         key={index}
         style={{
-          width: bar.width * 1.5,
-          height: 80,
+          width: bar.width * 3,
+          height: 100,
           backgroundColor: bar.value === '1' ? '#000' : 'transparent',
         }}
       />

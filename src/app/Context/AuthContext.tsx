@@ -13,13 +13,16 @@ interface AuthContextType {
   logout: () => void;
 }
 
+  const cleanPhone = (phone: string) => phone.replace(/\D/g, '');
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = (name: string, phone: string) => {
-    setUser({ name, phone, bonusUP: 150 });
+    const updatedPhone = cleanPhone(phone)
+    setUser({ name, phone: updatedPhone, bonusUP: 150 });
   };
 
   const logout = () => {

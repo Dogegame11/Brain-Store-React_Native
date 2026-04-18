@@ -4,19 +4,24 @@ import {
 } from 'react-native';
 import { styles } from './AccountStyle';
 import { AuthModal } from '../../app/providers/AuthModal';
-
+import { useNavigation } from '@react-navigation/native';
 
 
 import BarcodeCard from '../../shared/ui/Barcode';
-
-
 import { MAIN_MENU_ITEMS, SECONDARY_MENU_ITEMS, MenuItem } from '../../constants/menuConfig';
-
 import { useAuth } from '../../app/Context/AuthContext';
+import { useCart } from '../../app/Context/CartContext';
 
 
-const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isLast }) => (
-  <TouchableOpacity style={[styles.menuRow, isLast && styles.lastMenuRow]}>
+const MenuItemRow: React.FC<{ 
+  item: MenuItem; 
+  isLast?: boolean; 
+  onPress: () => void;
+}> = ({ item, isLast, onPress }) => (
+  <TouchableOpacity 
+    style={[styles.menuRow, isLast && styles.lastMenuRow]} 
+    onPress={onPress}
+  >
     <View style={styles.menuLeft}>
       <Text style={[styles.menuTitle, { color: item.iconColor }]}>{item.title}</Text>
     </View>
@@ -29,12 +34,24 @@ const MenuItemRow: React.FC<{ item: MenuItem; isLast?: boolean }> = ({ item, isL
 );
 
 const AccountScreen: React.FC = () => {
-
+  const navigation = useNavigation<any>();
   const {user} = useAuth();
+  const { items } = useCart();
+
+  const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
+
 
 if (!user) {
   return <AuthModal />;
 }
+
+const handleMenuPress = (item: MenuItem) => {
+    if (item.routeName) {
+      navigation.navigate(item.routeName);
+    } else {
+      console.log(`Маршрут для ${item.title} ще не налаштований`);
+    }
+  };
 
 
   return (
@@ -68,14 +85,22 @@ if (!user) {
         <BarcodeCard value={user.phone} />
         
         <View style={styles.menuBlock}>
-          {MAIN_MENU_ITEMS.map((item, index) => (
-            <MenuItemRow 
-              key={item.id} 
-              item={item} 
-              isLast={index === MAIN_MENU_ITEMS.length - 1} 
-            />
-          ))}
-        </View>
+    {MAIN_MENU_ITEMS.map((item, index) => {
+      const dynamicItem = {
+        ...item,
+        count: item.routeName === 'Cart' ? cartItemsCount : item.count
+      };
+
+      return (
+        <MenuItemRow 
+          key={item.id} 
+          item={dynamicItem} 
+          onPress={() => handleMenuPress(item)} 
+          isLast={index === MAIN_MENU_ITEMS.length - 1} 
+        />
+      );
+    })}
+  </View>
         
         <View style={styles.lineDivider} /> 
         <View style={styles.separator} /> 
@@ -85,6 +110,7 @@ if (!user) {
             <MenuItemRow 
               key={item.id} 
               item={item} 
+              onPress={() => handleMenuPress(item)} 
               isLast={index === SECONDARY_MENU_ITEMS.length - 1} 
             />
           ))}

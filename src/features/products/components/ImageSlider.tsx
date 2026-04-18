@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect, ReactNode  } from 'react';
 import { 
   View,  
   Image, 
@@ -54,10 +54,45 @@ const PaginationDots: React.FC<{ data: any[], activeIndex: number }> = ({ data, 
 );
 
 
+
+
 const ImageSlider: React.FC = () => {
 
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
+
+  const startAutoSlide = useCallback(() => {
+  intervalRef.current = setInterval(() => {
+    setActiveIndex((prevIndex) => {
+      const nextIndex = prevIndex + 1;
+
+      if (nextIndex < SLIDE_DATA.length) {
+        flatListRef.current?.scrollToIndex({
+          index: nextIndex,
+          animated: true,
+        });
+        return nextIndex;
+      } else {
+        flatListRef.current?.scrollToIndex({
+          index: 0,
+          animated: true,
+        });
+        return 0;
+      }
+    });
+  }, 3000);
+}, []);
+
+useEffect(() => {
+  startAutoSlide();
+
+  return () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+}, [startAutoSlide]);
 
   const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const slideSize = event.nativeEvent.layoutMeasurement.width;
@@ -77,6 +112,11 @@ const ImageSlider: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
+      getItemLayout={(_, index) => ({
+  length: SCREEN_WIDTH,
+  offset: SCREEN_WIDTH * index,
+  index,
+})}
         ref={flatListRef}
         data={SLIDE_DATA}
         renderItem={({ item }) => <SlideItem item={item} />}
@@ -86,7 +126,6 @@ const ImageSlider: React.FC = () => {
         showsHorizontalScrollIndicator={false} 
         snapToInterval={SCREEN_WIDTH} 
         decelerationRate="fast"
-        onScroll={onScroll} 
         scrollEventThrottle={16} 
         viewabilityConfig={viewabilityConfig}
         contentContainerStyle={styles.flatListContent}

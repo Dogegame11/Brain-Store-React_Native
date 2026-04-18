@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useCart } from '../../app/Context/CartContext';
 
 
 import Home from '../../pages/Home/Home';
 import Account from '../../pages/Account/Account';
 import Cart from '../../pages/Cart/Cart';
 import Orders from '../../pages/Orders/Orders';
-
 import Header from '../../shared/ui/Header';
 
 
@@ -32,6 +32,13 @@ const TAB_ICONS: Record<keyof RootTabParamList, any> = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export const BottomTabNavigator = () => {
+
+  const {items} = useCart();
+
+    const cartItemsCount = items.reduce((total, item) => total + item.quantity, 0);
+
+
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -61,7 +68,16 @@ export const BottomTabNavigator = () => {
       <Tab.Screen 
         name="Cart" 
         component={Cart} 
-        options={{ title: 'Кошик' }} 
+        
+        options={{ 
+          title: 'Кошик',
+          tabBarBadge: cartItemsCount > 0 ? cartItemsCount : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: '#28677c',
+            color: 'white',
+            fontSize: 10,
+          }
+         }} 
       />
       <Tab.Screen 
         name="Account" 

@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
     marginTop: -4,
   },
   
-  // 2. Profile Block
   content: {
     flex: 1,
   },

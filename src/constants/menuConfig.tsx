@@ -1,3 +1,5 @@
+
+
 export type MenuItem = {
   id: number;
   title: string;
@@ -6,12 +8,14 @@ export type MenuItem = {
   routeName?: string;
 };
 
+
+
 export const MAIN_MENU_ITEMS: MenuItem[] = [
-  { id: 1, title: 'Каталог', iconColor: '#28677c' },
-  { id: 2, title: 'Кошик', count: 1, iconColor: '#28677c' },
-  { id: 3, title: 'Акції', iconColor: '#28677c' },
-  { id: 4, title: 'Бажання', iconColor: '#28677c' },
-  { id: 5, title: 'Порівняння', iconColor: '#28677c' },
+  { id: 1, title: 'Каталог', iconColor: '#28677c', routeName: 'Home' },
+  { id: 2, title: 'Кошик', count: 0, iconColor: '#28677c', routeName: 'Cart' },
+  { id: 3, title: 'Акції', iconColor: '#28677c', routeName: 'Promotions' },
+  { id: 4, title: 'Бажання', iconColor: '#28677c', routeName: 'Favorites' },
+  { id: 5, title: 'Порівняння', iconColor: '#28677c', routeName: 'Compare' },
 ];
 
 export const SECONDARY_MENU_ITEMS: MenuItem[] = [

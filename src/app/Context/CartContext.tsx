@@ -14,6 +14,7 @@ interface CartItem {
   price: number;
   brainUP: number;
   quantity: number;
+  image: string
 }
 
 interface CartContextType {
