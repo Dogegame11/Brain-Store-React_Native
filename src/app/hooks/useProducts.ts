@@ -8,9 +8,12 @@ export const useProducts = () => {
 
   useEffect(() => {
     getProducts()
-      .then((data) => {
-        console.log("Отримані товари:", data.length); // Перевірка кількості
+      .then((data: Product[]) => { 
+        console.log("Отримані товари:", data.length); 
         setProducts(data);
+      })
+      .catch((err) => {
+        console.error("Помилка завантаження:", err);
       })
       .finally(() => setLoading(false));
   }, []);

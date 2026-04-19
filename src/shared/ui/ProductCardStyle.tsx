@@ -1,64 +1,87 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { THEME } from '../../constants/Theme'; // шлях під себе
 
 const { width } = Dimensions.get('window');
+const cardWidth = width / 2; 
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: THEME.background,
-    padding: 10,
-  },
-
   row: {
-    justifyContent: 'space-between',
-    marginBottom: 10,
+    justifyContent: 'flex-start', 
   },
-
   card: {
-    width: (width - 30) / 2,
+    width: cardWidth,
     backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 10,
-    elevation: 3,
+    borderWidth: 0.5,
+    borderColor: '#e0e0e0', 
+    position: 'relative',
   },
 
+  topActions: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 10, 
+    alignItems: 'center',
+    gap: 8, 
+  },
+  iconButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+    borderRadius: 20,
+    padding: 6,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
+  actionIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
   image: {
     width: '100%',
-    height: 100,
+    height: 120,
     resizeMode: 'contain',
-    marginBottom: 8,
+    marginVertical: 10,
   },
 
-  title: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: THEME.text,
-  },
-
-  brand: {
-    color: THEME.placeholder,
-    fontSize: 12,
-  },
-
-  price: {
-    fontSize: 16,
-    color: THEME.active,
+  pointsText: {
+    color: 'black',
+    fontSize: 11,
     fontWeight: 'bold',
-    marginTop: 4,
+    alignItems: 'center',
+     flexDirection: 'row',
   },
-
+  title: {
+    fontSize: 13,
+    color: '#333',
+    height: 36,
+    marginBottom: 4,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  price: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  currency: {
+    fontSize: 12,
+    marginLeft: 2,
+    color: '#000',
+  },
   addButton: {
-    backgroundColor: THEME.darkHeader,
-    paddingVertical: 6,
-    borderRadius: 6,
-    marginTop: 8,
+    backgroundColor: '#1E2D3E', 
+    paddingVertical: 8,
+    borderRadius: 4,
+    marginTop: 10,
   },
-
   buttonText: {
     color: '#fff',
     textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 12,
+    fontWeight: 'bold',
+    fontSize: 13,
   },
 });
